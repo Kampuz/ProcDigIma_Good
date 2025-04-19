@@ -1,14 +1,13 @@
 object Form1: TForm1
-  Left = 951
-  Height = 553
-  Top = 0
-  Width = 667
+  Left = 453
+  Height = 627
+  Top = 96
+  Width = 665
   Caption = 'Form1'
-  ClientHeight = 553
-  ClientWidth = 667
+  ClientHeight = 627
+  ClientWidth = 665
   DesignTimePPI = 120
   Menu = MainMenu
-  OnCreate = FormCreate
   LCLVersion = '3.8.0.0'
   object MoverImagem: TButton
     Left = 280
@@ -17,42 +16,37 @@ object Form1: TForm1
     Width = 94
     Caption = '<--'
     TabOrder = 0
-    OnClick = MoverImagemClick
   end
   object ImagemOriginal: TImage
     Left = 16
     Height = 200
     Top = 24
     Width = 200
-    OnClick = ImagemOriginalClick
+    OnMouseMove = ImagemOriginalMouseMove
   end
   object ImagemResultado: TImage
     Left = 448
     Height = 200
     Top = 24
     Width = 200
-    OnClick = ImagemOriginalClick
   end
   object CanalVermelho: TImage
     Left = 16
     Height = 200
     Top = 248
     Width = 200
-    OnClick = ImagemOriginalClick
   end
   object CanalVerde: TImage
     Left = 232
     Height = 200
     Top = 248
     Width = 200
-    OnClick = ImagemOriginalClick
   end
   object CanalAzul: TImage
     Left = 448
     Height = 200
     Top = 248
     Width = 200
-    OnClick = ImagemOriginalClick
   end
   object LabelX: TLabel
     Left = 232
@@ -102,7 +96,6 @@ object Form1: TForm1
     Top = 168
     Width = 11
     Caption = 'S:'
-    OnClick = LabelSClick
   end
   object LabelV: TLabel
     Left = 344
@@ -172,9 +165,9 @@ object Form1: TForm1
     Top = 496
     object MenuItemImagem: TMenuItem
       Caption = '&Imagem'
-      OnClick = MenuItemImagemClick
       object MenuItemAbrir: TMenuItem
         Caption = '&Abrir'
+        OnClick = MenuItemAbrirClick
       end
       object MenuItemSalvar: TMenuItem
         Caption = '&Salvar'
@@ -184,6 +177,7 @@ object Form1: TForm1
       end
       object MenuItemFechar: TMenuItem
         Caption = 'Fechar'
+        OnClick = MenuItemFecharClick
       end
     end
     object MenuItemOperacao: TMenuItem
