@@ -186,6 +186,7 @@ object Form1: TForm1
         Caption = '&Filtros'
         object MenuItemCinza: TMenuItem
           Caption = '&Cinza'
+          OnClick = MenuItemCinzaClick
         end
         object MenuItemNegativo: TMenuItem
           Caption = '&Negativo'

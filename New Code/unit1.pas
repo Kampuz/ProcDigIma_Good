@@ -64,7 +64,9 @@ type
     procedure ImagemOriginalMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
     procedure MenuItemAbrirClick(Sender: TObject);
+    procedure MenuItemCinzaClick(Sender: TObject);
     procedure MenuItemFecharClick(Sender: TObject);
+    procedure MenuItemNegativoClick(Sender: TObject);
   private
 
 
@@ -121,9 +123,57 @@ begin
                          ImagemOriginal.Picture.LoadFromFile(OpenDialog.FileName);
 end;
 
+procedure TForm1.MenuItemCinzaClick(Sender: TObject);
+var
+  x, y : Integer;
+  cor : TColor;
+  vermelho, verde, azul, cinza : Integer;
+begin
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+          cor := ImagemOriginal.Canvas.Pixels[x, y];
+
+          vermelho := GetRValue(cor);
+          verde := GetGValue(cor);
+          azul := GetBValue(cor);
+
+          cinza := round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+
+          cor := RGB(cinza, cinza, cinza);
+
+          ImagemResultado.Canvas.Pixels[x, y] := cor;
+      end;
+end;
+
 procedure TForm1.MenuItemFecharClick(Sender: TObject);
 begin
   Close();
+end;
+
+procedure TForm1.MenuItemNegativoClick(Sender: TObject);
+var
+  x, y : Integer;
+  cor : TColor;
+  vermelho, verde, azul, cinza : Integer;
+begin
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+          cor := ImagemOriginal.Canvas.Pixels[x, y];
+
+          vermelho := GetRValue(cor);
+          verde := GetGValue(cor);
+          azul := GetBValue(cor);
+
+          vermelho := 255 - vermelho;
+          verde := 255 - verde;
+          azul := 255 - azul;
+
+          cor := RGB(vermelho, verde, azul);
+
+          ImagemResultado.Canvas.Pixels[x, y] := cor;
+      end;
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
