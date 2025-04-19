@@ -1,9 +1,252 @@
 object Form1: TForm1
-  Left = 263
-  Height = 240
-  Top = 239
-  Width = 320
+  Left = 951
+  Height = 553
+  Top = 0
+  Width = 667
   Caption = 'Form1'
+  ClientHeight = 553
+  ClientWidth = 667
   DesignTimePPI = 120
+  Menu = MainMenu
+  OnCreate = FormCreate
   LCLVersion = '3.8.0.0'
+  object MoverImagem: TButton
+    Left = 280
+    Height = 31
+    Top = 40
+    Width = 94
+    Caption = '<--'
+    TabOrder = 0
+    OnClick = MoverImagemClick
+  end
+  object ImagemOriginal: TImage
+    Left = 16
+    Height = 200
+    Top = 24
+    Width = 200
+    OnClick = ImagemOriginalClick
+  end
+  object ImagemResultado: TImage
+    Left = 448
+    Height = 200
+    Top = 24
+    Width = 200
+    OnClick = ImagemOriginalClick
+  end
+  object CanalVermelho: TImage
+    Left = 16
+    Height = 200
+    Top = 248
+    Width = 200
+    OnClick = ImagemOriginalClick
+  end
+  object CanalVerde: TImage
+    Left = 232
+    Height = 200
+    Top = 248
+    Width = 200
+    OnClick = ImagemOriginalClick
+  end
+  object CanalAzul: TImage
+    Left = 448
+    Height = 200
+    Top = 248
+    Width = 200
+    OnClick = ImagemOriginalClick
+  end
+  object LabelX: TLabel
+    Left = 232
+    Height = 20
+    Top = 88
+    Width = 12
+    Caption = 'X:'
+  end
+  object LabelY: TLabel
+    Left = 344
+    Height = 20
+    Top = 88
+    Width = 11
+    Caption = 'Y:'
+  end
+  object LabelR: TLabel
+    Left = 232
+    Height = 20
+    Top = 132
+    Width = 12
+    Caption = 'R:'
+  end
+  object LabelG: TLabel
+    Left = 232
+    Height = 20
+    Top = 168
+    Width = 13
+    Caption = 'G:'
+  end
+  object LabelB: TLabel
+    Left = 232
+    Height = 20
+    Top = 204
+    Width = 12
+    Caption = 'B:'
+  end
+  object LabelH: TLabel
+    Left = 344
+    Height = 20
+    Top = 132
+    Width = 14
+    Caption = 'H:'
+  end
+  object LabelS: TLabel
+    Left = 344
+    Height = 20
+    Top = 168
+    Width = 11
+    Caption = 'S:'
+    OnClick = LabelSClick
+  end
+  object LabelV: TLabel
+    Left = 344
+    Height = 20
+    Top = 204
+    Width = 12
+    Caption = 'V:'
+  end
+  object EditX: TEdit
+    Left = 248
+    Height = 28
+    Top = 80
+    Width = 72
+    TabOrder = 1
+  end
+  object EditR: TEdit
+    Left = 248
+    Height = 28
+    Top = 124
+    Width = 72
+    TabOrder = 2
+  end
+  object EditG: TEdit
+    Left = 248
+    Height = 28
+    Top = 160
+    Width = 72
+    TabOrder = 3
+  end
+  object EditB: TEdit
+    Left = 248
+    Height = 28
+    Top = 196
+    Width = 72
+    TabOrder = 4
+  end
+  object EditY: TEdit
+    Left = 360
+    Height = 28
+    Top = 80
+    Width = 72
+    TabOrder = 5
+  end
+  object EditH: TEdit
+    Left = 360
+    Height = 28
+    Top = 124
+    Width = 72
+    TabOrder = 6
+  end
+  object EditS: TEdit
+    Left = 360
+    Height = 28
+    Top = 160
+    Width = 72
+    TabOrder = 7
+  end
+  object EditV: TEdit
+    Left = 360
+    Height = 28
+    Top = 196
+    Width = 72
+    TabOrder = 8
+  end
+  object MainMenu: TMainMenu
+    Left = 16
+    Top = 496
+    object MenuItemImagem: TMenuItem
+      Caption = '&Imagem'
+      OnClick = MenuItemImagemClick
+      object MenuItemAbrir: TMenuItem
+        Caption = '&Abrir'
+      end
+      object MenuItemSalvar: TMenuItem
+        Caption = '&Salvar'
+      end
+      object Separator1: TMenuItem
+        Caption = '-'
+      end
+      object MenuItemFechar: TMenuItem
+        Caption = 'Fechar'
+      end
+    end
+    object MenuItemOperacao: TMenuItem
+      Caption = '&Operações'
+      object MenuItemFiltros: TMenuItem
+        Caption = '&Filtros'
+        object MenuItemCinza: TMenuItem
+          Caption = '&Cinza'
+        end
+        object MenuItemNegativo: TMenuItem
+          Caption = '&Negativo'
+        end
+        object MenuItemMedia: TMenuItem
+          Caption = '&Média'
+        end
+        object MenuItemMediana: TMenuItem
+          Caption = 'Mediana'
+        end
+        object MenuItemLaplaciano: TMenuItem
+          Caption = 'Laplaciano'
+        end
+        object MenuItemSobel: TMenuItem
+          Caption = 'Sobel'
+        end
+      end
+      object MenuItemCanais: TMenuItem
+        Caption = 'Canais'
+        object MenuItemSeparar: TMenuItem
+          Caption = '&Separar'
+        end
+        object MenuItemRestaurar: TMenuItem
+          Caption = '&Restaurar'
+        end
+      end
+      object MenuItemConversores: TMenuItem
+        Caption = 'Conversores'
+        object MenuItemRGBparaHSV: TMenuItem
+          Caption = 'RGB -> HSV'
+        end
+        object MenuItemHSVparaRGB: TMenuItem
+          Caption = 'HSV -> RGB'
+        end
+      end
+      object MenuItemRuidos: TMenuItem
+        Caption = 'Ruídos'
+      end
+      object MenuItemEqualizacao: TMenuItem
+        Caption = 'Equalização'
+      end
+      object MenuItemBinarizacao: TMenuItem
+        Caption = 'Binarização'
+      end
+      object MenuItemCompressao: TMenuItem
+        Caption = 'Compressão Dinâmica'
+      end
+    end
+  end
+  object OpenDialog: TOpenDialog
+    Left = 96
+    Top = 496
+  end
+  object SaveDialog: TSaveDialog
+    Left = 168
+    Top = 496
+  end
 end
