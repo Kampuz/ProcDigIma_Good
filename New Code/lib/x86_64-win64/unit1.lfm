@@ -190,12 +190,15 @@ object Form1: TForm1
         end
         object MenuItemNegativo: TMenuItem
           Caption = '&Negativo'
+          OnClick = MenuItemNegativoClick
         end
         object MenuItemMedia: TMenuItem
           Caption = '&Média'
+          OnClick = MenuItemMediaClick
         end
         object MenuItemMediana: TMenuItem
           Caption = 'Mediana'
+          OnClick = MenuItemMedianaClick
         end
         object MenuItemLaplaciano: TMenuItem
           Caption = 'Laplaciano'

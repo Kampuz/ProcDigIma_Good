@@ -66,14 +66,18 @@ type
     procedure MenuItemAbrirClick(Sender: TObject);
     procedure MenuItemCinzaClick(Sender: TObject);
     procedure MenuItemFecharClick(Sender: TObject);
+    procedure MenuItemMediaClick(Sender: TObject);
+    procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
   private
 
 
   public
+    procedure ReceberCores(var r,g,b : Integer; x,y : Integer);
 
   end;
 
+  procedure OrdenarArray(var arr : array of Integer; i, j : Integer);
   procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
   procedure ConverterHSVparaRGB(h, s, v : Double; var r,g,b : Integer);
 
@@ -129,13 +133,13 @@ var
   cor : TColor;
   vermelho, verde, azul, cinza : Integer;
 begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
   for y := 0 to (ImagemOriginal.height - 1) do
       for x:= 0 to (ImagemOriginal.width - 1) do
       begin
-          cor := ImagemOriginal.Canvas.Pixels[x, y];
-          vermelho := GetRValue(cor);
-          verde := GetGValue(cor);
-          azul := GetBValue(cor);
+          ReceberCores(vermelho, verde, azul, x, y);
 
           cinza := round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
 
@@ -150,20 +154,111 @@ begin
   Close();
 end;
 
+procedure TForm1.MenuItemMediaClick(Sender: TObject);
+var
+  x, y, i, j, n : Integer;
+  cor : TColor;
+  vermelho, verde, azul : Integer;
+  somaVermelho, somaVerde, somaAzul : Integer;
+begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  for y := 1 to (ImagemOriginal.height - 2) do
+      for x:= 1 to (ImagemOriginal.width - 2) do
+      begin
+          somaVermelho := 0;
+          somaVerde := 0;
+          somaAzul := 0;
+          n := 0;
+
+          for j := -1 to 1 do
+              for i := -1 to 1 do
+              begin
+                   ReceberCores(vermelho, verde, azul, x + i, y + j);
+                   somaVermelho += vermelho;
+                   somaVerde += verde;
+                   somaAzul += azul;
+                   Inc(n);
+              end;
+
+          vermelho := round(somaVermelho / n);
+          verde := round(somaVerde / n);
+          azul := round(somaAzul / n);
+
+          cor := RGB(vermelho, verde, azul);
+
+          ImagemResultado.Canvas.Pixels[x, y] := cor;
+      end;
+end;
+
+procedure TForm1.MenuItemMedianaClick(Sender: TObject);
+var
+  x, y, i, j, n : Integer;
+  cor : TColor;
+  vermelho, verde, azul : Integer;
+  vermelhos, verdes, azuis : array[0..8] of Integer;
+begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  for n := 0 to 8 do
+  begin
+      vermelhos[n] := 0;
+      verdes[n] := 0;
+      azuis[n] := 0;
+  end;
+
+  for y := 1 to (ImagemOriginal.height - 2) do
+      for x:= 1 to (ImagemOriginal.width - 2) do
+      begin
+          n := 0;
+
+          for j := -1 to 1 do
+              for i := -1 to 1 do
+              begin
+                   ReceberCores(vermelho, verde, azul, x + i, y + j);
+                   vermelhos[(j + 1) * 3 + (i + 1)] += vermelho;
+                   verdes[(j + 1) * 3 + (i + 1)] += verde;
+                   azuis[(j + 1) * 3 + (i + 1)] += azul;
+                   Inc(n);
+              end;
+
+          for i := 0 to (n-2) do
+              for j := i + 1 to (n-1) do
+              begin
+                   OrdenarArray(vermelhos, i, j);
+                   OrdenarArray(verdes, i, j);
+                   OrdenarArray(azuis, i, j);
+              end;
+
+          n := trunc(n/2);
+
+          vermelho := vermelhos[n];
+          verde := verdes[n];
+          azul := azuis[n];
+
+          cor := RGB(vermelho, verde, azul);
+
+          ImagemResultado.Canvas.Pixels[x, y] := cor;
+      end;
+end;
+
 procedure TForm1.MenuItemNegativoClick(Sender: TObject);
 var
   x, y : Integer;
   cor : TColor;
-  vermelho, verde, azul, cinza : Integer;
+  vermelho, verde, azul : Integer;
 begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
   for y := 0 to (ImagemOriginal.height - 1) do
       for x:= 0 to (ImagemOriginal.width - 1) do
       begin
-          cor := ImagemOriginal.Canvas.Pixels[x, y];
-
-          vermelho := GetRValue(cor);
-          verde := GetGValue(cor);
-          azul := GetBValue(cor);
+          ReceberCores(vermelho, verde, azul, x, y);
 
           vermelho := 255 - vermelho;
           verde := 255 - verde;
@@ -250,6 +345,28 @@ begin
    r := round(vermelhoTemp + ajuste) * 255;
    g := round(verdeTemp + ajuste) * 255;
    b := round(azulTemp + ajuste) * 255;
+end;
+
+procedure TForm1.ReceberCores(var r,g,b : Integer; x,y : Integer);
+var
+   cor : TColor;
+begin
+    cor := ImagemOriginal.Canvas.Pixels[x, y];
+    r := GetRValue(cor);
+    g := GetGValue(cor);
+    b := GetBValue(cor);
+end;
+
+procedure OrdenarArray(var arr : array of Integer; i, j : Integer);
+var
+   temp : Integer;
+begin
+     if arr[i] > arr[j] then
+     begin
+          temp := arr[i];
+          arr[i] := arr[j];
+          arr[j] := temp;
+     end;
 end;
 
 end.
