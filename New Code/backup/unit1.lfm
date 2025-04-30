@@ -192,6 +192,7 @@ object Form1: TForm1
       end
       object MenuItemSalvar: TMenuItem
         Caption = '&Salvar'
+        OnClick = MenuItemSalvarClick
       end
       object Separator1: TMenuItem
         Caption = '-'
@@ -218,15 +219,15 @@ object Form1: TForm1
           OnClick = MenuItemMediaClick
         end
         object MenuItemMediana: TMenuItem
-          Caption = 'Mediana'
+          Caption = '&Mediana'
           OnClick = MenuItemMedianaClick
         end
         object MenuItemLaplaciano: TMenuItem
-          Caption = 'Laplaciano'
+          Caption = '&Laplaciano'
           OnClick = MenuItemLaplacianoClick
         end
         object MenuItemSobel: TMenuItem
-          Caption = 'Sobel'
+          Caption = '&Sobel'
           OnClick = MenuItemSobelClick
         end
       end

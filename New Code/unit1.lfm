@@ -192,6 +192,7 @@ object Form1: TForm1
       end
       object MenuItemSalvar: TMenuItem
         Caption = '&Salvar'
+        OnClick = MenuItemSalvarClick
       end
       object Separator1: TMenuItem
         Caption = '-'

@@ -75,6 +75,7 @@ type
     procedure MenuItemNegativoClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
     procedure MenuItemRuidosClick(Sender: TObject);
+    procedure MenuItemSalvarClick(Sender: TObject);
     procedure MenuItemSobelClick(Sender: TObject);
   private
 
@@ -527,6 +528,18 @@ begin
           Atualizar(y);
       end;
   ResetarBarra();
+end;
+
+procedure TForm1.MenuItemSalvarClick(Sender: TObject);
+var
+  fileName : String;
+begin
+  fileName := InputBox('Salvar Imagem', 'Nome da Imagem:', 'Imagem.png');
+  try
+    ImagemResultado.SaveToFile(fileName);
+  finally
+    ImagemResultado.Free;
+  end;
 end;
 
 procedure TForm1.MenuItemSobelClick(Sender: TObject);
