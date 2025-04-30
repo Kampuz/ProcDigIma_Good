@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, StdCtrls,
-  ExtCtrls, ComCtrls, Windows, Math;
+  ExtCtrls, ComCtrls, Windows, Math, Unit2;
 
 type
 
@@ -72,6 +72,7 @@ type
     procedure MenuItemMediaClick(Sender: TObject);
     procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
+    procedure MenuItemRGBparaHSVClick(Sender: TObject);
   private
 
 
@@ -359,6 +360,11 @@ begin
           Atualizar(y);
       end;
   ResetarBarra();
+end;
+
+procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
+begin
+  Form2.Show();
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);

@@ -228,6 +228,7 @@ object Form1: TForm1
         Caption = 'Conversores'
         object MenuItemRGBparaHSV: TMenuItem
           Caption = 'RGB -> HSV'
+          OnClick = MenuItemRGBparaHSVClick
         end
         object MenuItemHSVparaRGB: TMenuItem
           Caption = 'HSV -> RGB'

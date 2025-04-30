@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, StdCtrls,
-  ExtCtrls, ComCtrls, Windows, Math;
+  ExtCtrls, ComCtrls, Windows, Math, Unit2;
 
 type
 
@@ -42,8 +42,6 @@ type
     MenuItemMediana: TMenuItem;
     MenuItemMedia: TMenuItem;
     MenuItemRuidos: TMenuItem;
-    MenuItemHSVparaRGB: TMenuItem;
-    MenuItemRGBparaHSV: TMenuItem;
     MenuItemRestaurar: TMenuItem;
     MenuItemSeparar: TMenuItem;
     MenuItemNegativo: TMenuItem;
@@ -67,6 +65,7 @@ type
     procedure MenuItemAbrirClick(Sender: TObject);
     procedure MenuItemBinarizacaoClick(Sender: TObject);
     procedure MenuItemCinzaClick(Sender: TObject);
+    procedure MenuItemConversoresClick(Sender: TObject);
     procedure MenuItemFecharClick(Sender: TObject);
     procedure MenuItemLaplacianoClick(Sender: TObject);
     procedure MenuItemMediaClick(Sender: TObject);
@@ -195,6 +194,11 @@ begin
           Atualizar(y);
       end;
   ResetarBarra();
+end;
+
+procedure TForm1.MenuItemConversoresClick(Sender: TObject);
+begin
+  Form2.Show();
 end;
 
 procedure TForm1.MenuItemFecharClick(Sender: TObject);
@@ -364,7 +368,7 @@ end;
 
 procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
 begin
-
+  Form2.Show();
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
