@@ -11,7 +11,11 @@
 - Laplaciano [X]
 - Sobel [ ]
 
-### Canais [ ]
+### Canais
+
+- [X] Separação Cinza
+- [X] Separação Colorida
+- [X] Restauração
 
 ### Ruído [ ]
 
