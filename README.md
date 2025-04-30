@@ -15,7 +15,7 @@
 
 ### Ruído [ ]
 
-### Equalização [ ]
+### Equalização [X]
 
 ### Binarização [X]
 
