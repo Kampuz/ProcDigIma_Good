@@ -34,6 +34,7 @@ type
     LabelH: TLabel;
     LabelS: TLabel;
     LabelV: TLabel;
+    MenuItem1: TMenuItem;
     MenuItemEqualizacao: TMenuItem;
     MenuItemBinarizacao: TMenuItem;
     MenuItemCompressao: TMenuItem;
@@ -62,6 +63,7 @@ type
     Separator1: TMenuItem;
     procedure ImagemOriginalMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
+    procedure MenuItem1Click(Sender: TObject);
     procedure MenuItemAbrirClick(Sender: TObject);
     procedure MenuItemBinarizacaoClick(Sender: TObject);
     procedure MenuItemCinzaClick(Sender: TObject);
@@ -72,7 +74,10 @@ type
     procedure MenuItemMediaClick(Sender: TObject);
     procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
+    procedure MenuItemRestaurarClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
+    procedure MenuItemSepararClick(Sender: TObject);
+    procedure MenuItemSepararColoridoClick(Sender: TObject);
   private
 
 
@@ -124,6 +129,11 @@ begin
   EditH.Text := FloatToStr(matriz);
   EditS.Text := FloatToStr(saturacao);
   EditV.Text := FloatToStr(valor);
+
+end;
+
+procedure TForm1.MenuItem1Click(Sender: TObject);
+begin
 
 end;
 
@@ -221,18 +231,18 @@ begin
       for x := 0 to ImagemOriginal.Width - 1 do
           cinzas[x,y] := 0;
 
+  for i := 0 to 255 do
+  begin
+       histOriginal[i] := 0;
+       histResultado[i] := 0;
+  end;
+
   soma := 0;
   pixels := ImagemOriginal.Height * ImagemOriginal.Width;
 
   vermelho := 0;
   verde := 0;
   azul := 0;
-
-  for i := 0 to 255 do
-  begin
-       histOriginal[i] := 0;
-       histResultado[i] := 0;
-  end;
 
   for y := 0 to ImagemOriginal.Height - 1 do
     for x := 0 to ImagemOriginal.Width - 1 do
@@ -425,9 +435,94 @@ begin
   ResetarBarra();
 end;
 
+procedure TForm1.MenuItemRestaurarClick(Sender: TObject);
+var
+  x, y : Integer;
+  cor : TColor;
+  vermelho, verde, azul : Integer;
+begin
+  AjustandoBarra();
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+  for y := 0 to (ImagemOriginal.height - 1) do
+    for x:= 0 to (ImagemOriginal.width - 1) do
+      cor := CanalVermelho.Canvas.Pixels[x, y];
+        vermelho := GetRValue(cor);
+      cor := CanalVerde.Canvas.Pixels[x, y];
+        verde := GetGValue(cor);
+      cor := CanalAzul.Canvas.Pixels[x, y];
+        azul := GetBValue(cor);
+
+      cor := RGB(vermelho, verde, azul);
+
+      ImagemResultado.Canvas.Pixels[x, y] := cor;
+      Atualizar(y);
+  ResetarBarra();
+end;
+
 procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
 begin
   Form2.Show();
+end;
+
+procedure TForm1.MenuItemSepararClick(Sender: TObject);
+var
+  x, y : Integer;
+  cor : TColor;
+  vermelho, verde, azul : Integer;
+begin
+  AjustandoBarra();
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+           ReceberCores(vermelho, verde, azul, x, y);
+
+           cor := RGB(vermelho, vermelho, vermelho);
+           CanalVermelho.Canvas.Pixels[x, y] := cor;
+
+           cor := RGB(verde, verde, verde);
+           CanalVerde.Canvas.Pixels[x, y] := cor;
+
+           cor := RGB(azul, azul, azul);
+           CanalAzul.Canvas.Pixels[x, y] := cor;
+
+           Atualizar(y);
+      end;
+  ResetarBarra();
+
+end;
+
+procedure TForm1.MenuItemSepararColoridoClick(Sender: TObject);
+var
+  x, y : Integer;
+  cor : TColor;
+  vermelho, verde, azul : Integer;
+begin
+  AjustandoBarra();
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+           ReceberCores(vermelho, verde, azul, x, y);
+
+           cor := RGB(vermelho, 0, 0);
+           CanalVermelho.Canvas.Pixels[x, y] := cor;
+
+           cor := RGB(0, verde, 0);
+           CanalVerde.Canvas.Pixels[x, y] := cor;
+
+           cor := RGB(0, 0, azul);
+           CanalAzul.Canvas.Pixels[x, y] := cor;
+
+           Atualizar(y);
+      end;
+  ResetarBarra();
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
