@@ -75,6 +75,7 @@ type
     procedure MenuItemNegativoClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
     procedure MenuItemRuidosClick(Sender: TObject);
+    procedure MenuItemSobelClick(Sender: TObject);
   private
 
 
@@ -317,12 +318,15 @@ end;
 
 procedure TForm1.MenuItemLaplacianoClick(Sender: TObject);
 var
-  x, y: Integer;
+  x, y, i: Integer;
   cor : TColor;
   vermelho, verde, azul, cinza : Integer;
   cinzas : array of array of Integer;
 begin
-     SetLength(cinzas, ImagemOriginal.Width, ImagemOriginal.Height);
+     SetLength(cinzas, ImagemOriginal.Width);
+
+  for i := 0 to ImagemOriginal.Width - 1 do
+      SetLength(cinzas[i], ImagemOriginal.Height);
 
      AjustandoBarra();
 
@@ -523,6 +527,58 @@ begin
           Atualizar(y);
       end;
   ResetarBarra();
+end;
+
+procedure TForm1.MenuItemSobelClick(Sender: TObject);
+var
+  x, y, i : Integer;
+  Gx, Gy, gradiente : Double;
+  vermelho, verde, azul : Integer;
+  cinzas : array of array of Integer;
+
+begin
+  AjustandoBarra;
+
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  SetLength(cinzas, ImagemOriginal.Width);
+
+  for i := 0 to ImagemOriginal.Width - 1 do
+      SetLength(cinzas[i], ImagemOriginal.Height);
+
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+           ReceberCores(vermelho, verde, azul, x, y);
+           cinzas[x,y] := round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+           Atualizar(y);
+      end;
+
+  for y := 1 to (ImagemOriginal.height - 2) do
+      for x:= 1 to (ImagemOriginal.width - 2) do
+      begin
+          Gx := 0;
+          Gy := 0;
+
+          Gx := - cinzas[x-1,y-1] + cinzas[x+1,y-1]
+                - 2*cinzas[x-1,y] + 2*cinzas[x+1,y]
+                - cinzas[x-1,y+1] + cinzas[x+1,y+1];
+
+          Gy := - cinzas[x-1,y-1] + cinzas[x-1,y+1]
+                - 2*cinzas[x,y-1] + 2*cinzas[x,y+1]
+                - cinzas[x+1,y-1] + cinzas[x+1,y+1];
+
+          gradiente := sqrt((Gx * Gx) + (Gy * Gy));
+
+          gradiente := Max(0, Min(gradiente, 255));
+
+          ImagemResultado.Canvas.Pixels[x, y] := RGB(Round(gradiente), Round(gradiente), Round(gradiente));
+          Atualizar(y);
+      end;
+
+  ResetarBarra;
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);

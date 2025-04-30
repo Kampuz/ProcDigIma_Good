@@ -227,6 +227,7 @@ object Form1: TForm1
         end
         object MenuItemSobel: TMenuItem
           Caption = 'Sobel'
+          OnClick = MenuItemSobelClick
         end
       end
       object MenuItemCanais: TMenuItem

@@ -5,7 +5,7 @@ unit Unit2;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows, Math;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Math;
 
 type
 
@@ -83,7 +83,7 @@ begin
   saturacao := StrToFloat(EditS.Text);
   valor := StrToFloat(EditV.Text);
 
-  ConverterRGBparaHSV(vermelho, verde, azul, matiz, saturacao, valor);
+  ConverterHSVparaRGB(vermelho, verde, azul, matiz, saturacao, valor);
 
   EditR.Text := IntToStr(vermelho);
   EditG.Text := IntToStr(verde);

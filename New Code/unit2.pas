@@ -83,7 +83,7 @@ begin
   saturacao := StrToFloat(EditS.Text);
   valor := StrToFloat(EditV.Text);
 
-  ConverterRGBparaHSV(vermelho, verde, azul, matiz, saturacao, valor);
+  ConverterHSVparaRGB(matiz, saturacao, valor, vermelho, verde, azul);
 
   EditR.Text := IntToStr(vermelho);
   EditG.Text := IntToStr(verde);

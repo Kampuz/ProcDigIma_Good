@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 289
+  Left = 429
   Height = 627
-  Top = 91
+  Top = 73
   Width = 737
   Caption = 'Form1'
   ClientHeight = 627
@@ -218,19 +218,20 @@ object Form1: TForm1
           OnClick = MenuItemMediaClick
         end
         object MenuItemMediana: TMenuItem
-          Caption = 'Mediana'
+          Caption = '&Mediana'
           OnClick = MenuItemMedianaClick
         end
         object MenuItemLaplaciano: TMenuItem
-          Caption = 'Laplaciano'
+          Caption = '&Laplaciano'
           OnClick = MenuItemLaplacianoClick
         end
         object MenuItemSobel: TMenuItem
-          Caption = 'Sobel'
+          Caption = '&Sobel'
+          OnClick = MenuItemSobelClick
         end
       end
       object MenuItemCanais: TMenuItem
-        Caption = 'Canais'
+        Caption = '&Canais'
         object MenuItemSeparar: TMenuItem
           Caption = '&Separar'
         end
@@ -239,23 +240,23 @@ object Form1: TForm1
         end
       end
       object MenuItemConversores: TMenuItem
-        Caption = 'Conversores'
+        Caption = 'Con&versor'
         OnClick = MenuItemConversoresClick
       end
       object MenuItemRuidos: TMenuItem
-        Caption = 'Ruídos'
+        Caption = '&Ruído Sal e Pimenta'
         OnClick = MenuItemRuidosClick
       end
       object MenuItemEqualizacao: TMenuItem
-        Caption = 'Equalização'
+        Caption = '&Equalização'
         OnClick = MenuItemEqualizacaoClick
       end
       object MenuItemBinarizacao: TMenuItem
-        Caption = 'Binarização'
+        Caption = '&Binarização'
         OnClick = MenuItemBinarizacaoClick
       end
       object MenuItemCompressao: TMenuItem
-        Caption = 'Compressão Dinâmica'
+        Caption = 'Com&pressão'
         OnClick = MenuItemCompressaoClick
       end
     end
