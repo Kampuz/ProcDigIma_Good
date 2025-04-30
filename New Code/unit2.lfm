@@ -1,96 +1,128 @@
 object Form2: TForm2
-  Left = 871
-  Height = 126
-  Top = 140
-  Width = 241
+  Left = 939
+  Height = 237
+  Top = 162
+  Width = 254
   Caption = 'Form2'
-  ClientHeight = 126
-  ClientWidth = 241
+  ClientHeight = 237
+  ClientWidth = 254
   DesignTimePPI = 120
-  OnCreate = FormCreate
   LCLVersion = '3.8.0.0'
   object LabelR: TLabel
     Left = 16
     Height = 20
-    Top = 24
+    Top = 32
     Width = 12
     Caption = 'R:'
   end
   object LabelG: TLabel
-    Left = 15
+    Left = 16
     Height = 20
-    Top = 96
+    Top = 68
     Width = 13
     Caption = 'G:'
   end
   object LabelB: TLabel
     Left = 16
     Height = 20
-    Top = 60
+    Top = 104
     Width = 12
     Caption = 'B:'
   end
   object LabelH: TLabel
-    Left = 136
+    Left = 128
     Height = 20
-    Top = 24
+    Top = 32
     Width = 14
     Caption = 'H:'
   end
   object LabelS: TLabel
-    Left = 139
+    Left = 128
     Height = 20
-    Top = 60
+    Top = 68
     Width = 11
     Caption = 'S:'
   end
   object LabelV: TLabel
-    Left = 138
+    Left = 128
     Height = 20
-    Top = 96
+    Top = 104
     Width = 12
     Caption = 'V:'
   end
   object EditR: TEdit
     Left = 32
     Height = 28
-    Top = 16
+    Top = 24
     Width = 72
+    NumbersOnly = True
     TabOrder = 0
   end
   object EditG: TEdit
     Left = 32
     Height = 28
-    Top = 88
+    Top = 60
     Width = 72
+    NumbersOnly = True
     TabOrder = 1
   end
   object EditB: TEdit
     Left = 32
     Height = 28
-    Top = 52
+    Top = 96
     Width = 72
+    NumbersOnly = True
     TabOrder = 2
   end
   object EditH: TEdit
-    Left = 152
+    Left = 144
     Height = 28
-    Top = 16
+    Top = 24
     Width = 72
+    NumbersOnly = True
     TabOrder = 3
   end
   object EditS: TEdit
-    Left = 152
+    Left = 144
     Height = 28
-    Top = 52
+    Top = 60
     Width = 72
+    NumbersOnly = True
     TabOrder = 4
   end
   object EditV: TEdit
-    Left = 152
+    Left = 144
     Height = 28
-    Top = 88
+    Top = 96
     Width = 72
+    NumbersOnly = True
     TabOrder = 5
+  end
+  object ConverterRGBHSV: TButton
+    Left = 16
+    Height = 31
+    Top = 144
+    Width = 94
+    Caption = 'RGB -> HSV'
+    TabOrder = 6
+    OnClick = ConverterRGBHSVClick
+  end
+  object ConverterHSVRGB: TButton
+    Left = 128
+    Height = 31
+    Top = 144
+    Width = 94
+    Caption = 'HSV -> RGB'
+    TabOrder = 7
+    OnClick = ConverterHSVRGBClick
+  end
+  object ButtonClose: TButton
+    Left = 71
+    Height = 31
+    Top = 195
+    Width = 94
+    Caption = 'Close'
+    TabOrder = 8
+    OnClick = ButtonCloseClick
   end
 end
