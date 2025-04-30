@@ -74,6 +74,7 @@ type
     procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
+    procedure MoverImagemClick(Sender: TObject);
   private
 
 
@@ -240,7 +241,7 @@ begin
       else if s < 0 then
         s := 0;
 
-          ImagemResultado.Canvas.Pixels[x, y] := RGB(s, s, s);
+          ImagemResultado.Canvas.Pixels[x, y] := RGB(Round(s), Round(s), Round(s));
           Atualizar(y);
       end;
   ResetarBarra();
@@ -477,6 +478,17 @@ end;
 procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
 begin
   Form2.Show();
+end;
+
+procedure TForm1.MoverImagemClick(Sender: TObject);
+var
+  x, y : Integer;
+begin
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+          ImagemOriginal.Canvas.Pixels[x, y] := ImagemResultado.Canvas.Pixels[x, y];
+      end;
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);

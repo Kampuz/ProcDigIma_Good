@@ -5,7 +5,7 @@ unit Unit2;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows, Math;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Math;
 
 type
 
@@ -30,6 +30,7 @@ type
     procedure ButtonCloseClick(Sender: TObject);
     procedure ConverterHSVRGBClick(Sender: TObject);
     procedure ConverterRGBHSVClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
 
   public
