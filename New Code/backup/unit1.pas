@@ -72,6 +72,8 @@ type
     procedure MenuItemMediaClick(Sender: TObject);
     procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
+    procedure MenuItemRGBparaHSVClick(Sender: TObject);
+    procedure AjustarLayout;
   private
 
 
@@ -126,11 +128,108 @@ begin
 
 end;
 
+procedure TForm1.AjustarLayout;
+var
+  Margem, TopBase, EspacoEntreCanal: Integer;
+begin
+  Margem := 20;
+  EspacoEntreCanal := 10; // espaço entre os canais R, G, B
+
+  // Ajustar ImagemResultado ao lado da ImagemOriginal
+  ImagemResultado.Left := ImagemOriginal.Left + ImagemOriginal.Width + LabelX.Width * 2 + EditX.Width * 2 + 40 + Margem;
+  ImagemResultado.Top := ImagemOriginal.Top;
+  ImagemResultado.Width := ImagemOriginal.Width;
+  ImagemResultado.Height := ImagemOriginal.Height;
+
+  // Posição inicial para os canais de cor
+  TopBase := ImagemOriginal.Top + ImagemOriginal.Height + Margem;
+
+  // Canal Vermelho
+  CanalVermelho.Left := ImagemOriginal.Left;
+  CanalVermelho.Top := TopBase;
+  CanalVermelho.Width := ImagemOriginal.Width;
+  CanalVermelho.Height := ImagemOriginal.Height; // quadrado
+
+  // Canal Verde
+  CanalVerde.Left := CanalVermelho.Left + CanalVermelho.Width + EspacoEntreCanal;
+  CanalVerde.Top := TopBase;
+  CanalVerde.Width := CanalVermelho.Width;
+  CanalVerde.Height := CanalVermelho.Height;
+
+  // Canal Azul
+  CanalAzul.Left := CanalVerde.Left + CanalVerde.Width + EspacoEntreCanal;
+  CanalAzul.Top := TopBase;
+  CanalAzul.Width := CanalVermelho.Width;
+  CanalAzul.Height := CanalVermelho.Height;
+
+  // Botões e Barra de Progresso
+  ProgressBar.Left := ImagemOriginal.Left + ImagemOriginal.Width + 10 + round((LabelX.Width + EditX.Width)/2);
+  ProgressBar.Top := Margem;
+  MoverImagem.Left := ProgressBar.Left + 10;
+  MoverImagem.Top := ProgressBar.Top + ProgressBar.Height + 10;
+
+  // Labels e Caixas de Texto - organizados abaixo dos canais
+  // Posições dos labels (X, Y, R, G, B, H, S, V)
+  LabelX.Left := ImagemOriginal.Left + ImagemOriginal.Width + 10;
+  LabelX.Top := Margem + MoverImagem.Top + MoverImagem.Height;
+  EditX.Left := LabelX.Left + LabelX.Width + 5;  // Espaço entre o label e a caixa de texto
+  EditX.Top := LabelX.Top;
+
+  LabelY.Left := LabelX.Left + LabelX.Width + EditX.Width + 30;
+  LabelY.Top := LabelX.Top;
+  EditY.Left := LabelY.Left + LabelY.Width + 10;
+  EditY.Top := LabelY.Top;
+
+  LabelR.Left := LabelX.Left;
+  LabelR.Top := LabelX.Top + LabelX.Height + 30;
+  EditR.Left := EditX.Left;
+  EditR.Top := LabelR.Top;
+
+  LabelG.Left := LabelX.Left;
+  LabelG.Top := LabelR.Top + LabelR.Height + 15;
+  EditG.Left := EditX.Left;
+  EditG.Top := LabelG.Top;
+
+  LabelB.Left := LabelX.Left;
+  LabelB.Top := LabelG.Top + LabelG.Height + 15;
+  EditB.Left := EditX.Left;
+  EditB.Top := LabelB.Top;
+
+  LabelH.Left := LabelY.Left;
+  LabelH.Top := LabelY.Top + LabelY.Height + 30;
+  EditH.Left := EditY.Left;
+  EditH.Top := LabelH.Top;
+
+  LabelS.Left := LabelY.Left;
+  LabelS.Top := LabelH.Top + LabelH.Height + 15;
+  EditS.Left := EditY.Left;
+  EditS.Top := LabelS.Top;
+
+  LabelV.Left := LabelY.Left;
+  LabelV.Top := LabelS.Top + LabelS.Height + 15;
+  EditV.Left := EditY.Left;
+  EditV.Top := LabelV.Top;
+
+  // Ajuste final do tamanho do formulário
+  Self.ClientWidth := CanalVerde.Left + CanalVerde.Width + Margem * 2;
+  Self.ClientHeight := CanalVermelho.Top + CanalVermelho.Height + Margem * 2;
+end;
+
+
 procedure TForm1.MenuItemAbrirClick(Sender: TObject);
 begin
-  if(OpenDialog.Execute) then
-                         ImagemOriginal.Picture.LoadFromFile(OpenDialog.FileName);
+  if OpenDialog.Execute then
+  begin
+    ImagemOriginal.Picture.LoadFromFile(OpenDialog.FileName);
+
+    ImagemOriginal.Width := ImagemOriginal.Picture.Width;
+    ImagemOriginal.Height := ImagemOriginal.Picture.Height;
+
+    // Agora chama o método para reorganizar tudo:
+    AjustarLayout;
+  end;
 end;
+
 
 procedure TForm1.MenuItemBinarizacaoClick(Sender: TObject);
 var
@@ -359,6 +458,11 @@ begin
           Atualizar(y);
       end;
   ResetarBarra();
+end;
+
+procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
+begin
+
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
