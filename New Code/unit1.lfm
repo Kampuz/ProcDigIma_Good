@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 621
+  Left = 272
   Height = 627
-  Top = 145
+  Top = 99
   Width = 665
   Caption = 'Form1'
   ClientHeight = 627
@@ -228,6 +228,7 @@ object Form1: TForm1
         Caption = 'Conversores'
         object MenuItemRGBparaHSV: TMenuItem
           Caption = 'RGB -> HSV'
+          OnClick = MenuItemRGBparaHSVClick
         end
         object MenuItemHSVparaRGB: TMenuItem
           Caption = 'HSV -> RGB'
