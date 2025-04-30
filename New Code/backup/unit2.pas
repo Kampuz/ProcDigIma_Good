@@ -30,7 +30,6 @@ type
     procedure ButtonCloseClick(Sender: TObject);
     procedure ConverterHSVRGBClick(Sender: TObject);
     procedure ConverterRGBHSVClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
 
   public

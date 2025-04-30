@@ -77,9 +77,12 @@ type
     procedure MenuItemNegativoClick(Sender: TObject);
     procedure MenuItemRestaurarClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
-    procedure MoverImagemClick(Sender: TObject);
+<<<<<<< HEAD
     procedure MenuItemSepararClick(Sender: TObject);
     procedure MenuItemSepararColoridoClick(Sender: TObject);
+=======
+    procedure MoverImagemClick(Sender: TObject);
+>>>>>>> 94a90b7c1cd9cc473e7030a3d670789a1cac12c9
   private
 
 
@@ -497,6 +500,7 @@ begin
   azul := 0;
   for y := 0 to (ImagemOriginal.height - 1) do
     for x:= 0 to (ImagemOriginal.width - 1) do
+    begin
       cor := CanalVermelho.Canvas.Pixels[x, y];
         vermelho := GetRValue(cor);
       cor := CanalVerde.Canvas.Pixels[x, y];
@@ -508,6 +512,7 @@ begin
 
       ImagemResultado.Canvas.Pixels[x, y] := cor;
       Atualizar(y);
+    end;
   ResetarBarra();
 end;
 
@@ -516,17 +521,7 @@ begin
   Form2.Show();
 end;
 
-procedure TForm1.MoverImagemClick(Sender: TObject);
-var
-  x, y : Integer;
-begin
-  for y := 0 to (ImagemOriginal.height - 1) do
-      for x:= 0 to (ImagemOriginal.width - 1) do
-      begin
-          ImagemOriginal.Canvas.Pixels[x, y] := ImagemResultado.Canvas.Pixels[x, y];
-      end;
-end;
-
+<<<<<<< HEAD
 procedure TForm1.MenuItemSepararClick(Sender: TObject);
 var
   x, y : Integer;
@@ -584,6 +579,17 @@ begin
            Atualizar(y);
       end;
   ResetarBarra();
+=======
+procedure TForm1.MoverImagemClick(Sender: TObject);
+var
+  x, y : Integer;
+begin
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+          ImagemOriginal.Canvas.Pixels[x, y] := ImagemResultado.Canvas.Pixels[x, y];
+      end;
+>>>>>>> 94a90b7c1cd9cc473e7030a3d670789a1cac12c9
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
