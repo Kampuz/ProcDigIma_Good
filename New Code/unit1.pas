@@ -66,6 +66,7 @@ type
     procedure MenuItemBinarizacaoClick(Sender: TObject);
     procedure MenuItemCinzaClick(Sender: TObject);
     procedure MenuItemConversoresClick(Sender: TObject);
+    procedure MenuItemEqualizacaoClick(Sender: TObject);
     procedure MenuItemFecharClick(Sender: TObject);
     procedure MenuItemLaplacianoClick(Sender: TObject);
     procedure MenuItemMediaClick(Sender: TObject);
@@ -199,6 +200,64 @@ end;
 procedure TForm1.MenuItemConversoresClick(Sender: TObject);
 begin
   Form2.Show();
+end;
+
+procedure TForm1.MenuItemEqualizacaoClick(Sender: TObject);
+var
+  x, y : Integer;
+  vermelho, verde, azul : Integer;
+  pixels, soma, i : Integer;
+  cinzas : array of array of Integer;
+  histOriginal, histResultado, tabela : array[0..255] of Integer;
+begin
+  AjustandoBarra();
+
+  SetLength(cinzas, ImagemOriginal.Width);
+
+  for i := 0 to ImagemOriginal.Width - 1 do
+      SetLength(cinzas[i], ImagemOriginal.Height);
+
+  for y := 0 to ImagemOriginal.Height - 1 do
+      for x := 0 to ImagemOriginal.Width - 1 do
+          cinzas[x,y] := 0;
+
+  for i := 0 to 255 do
+  begin
+       histOriginal[i] := 0;
+       histResultado[i] := 0;
+  end;
+
+  soma := 0;
+  pixels := ImagemOriginal.Height * ImagemOriginal.Width;
+
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  for y := 0 to ImagemOriginal.Height - 1 do
+    for x := 0 to ImagemOriginal.Width - 1 do
+    begin
+      ReceberCores(vermelho, verde, azul, x, y);
+      cinzas[x,y] := Round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+      histOriginal[cinzas[x,y]] += 1;
+      Atualizar(y);
+    end;
+
+  for i := 0 to 255 do
+  begin
+    soma += histOriginal[i];
+    histResultado[i] := soma;
+    tabela[i] := Round(255 * histResultado[i] / pixels);
+  end;
+
+  for y := 0 to ImagemOriginal.Height - 1 do
+    for x := 0 to ImagemOriginal.Width - 1 do
+    begin
+      cinzas[x,y] := tabela[cinzas[x,y]];
+      ImagemResultado.Canvas.Pixels[x, y] := RGB(cinzas[x,y], cinzas[x,y], cinzas[x,y]);
+      Atualizar(y);
+    end;
+  ResetarBarra();
 end;
 
 procedure TForm1.MenuItemFecharClick(Sender: TObject);

@@ -247,6 +247,7 @@ object Form1: TForm1
       end
       object MenuItemEqualizacao: TMenuItem
         Caption = 'Equalização'
+        OnClick = MenuItemEqualizacaoClick
       end
       object MenuItemBinarizacao: TMenuItem
         Caption = 'Binarização'
