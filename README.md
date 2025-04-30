@@ -1,8 +1,7 @@
 # ProcDigIma_Good
 **Trabalho de Processamento Digital de Imagens**
 
-### Conversor
-- HSV / RGB [ ]
+### Conversor [ ]
 
 ### Filtros
 - Cinza [X]
