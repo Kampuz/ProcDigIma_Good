@@ -72,13 +72,14 @@ type
     procedure MenuItemMediaClick(Sender: TObject);
     procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
+    procedure MenuItemRGBparaHSVClick(Sender: TObject);
   private
 
 
   public
     procedure ReceberCores(var r,g,b : Integer; x,y : Integer);
     procedure Atualizar(y : Integer);
-    procedure AjustandoBarra();
+    procedure AjustandoBarra(        );
     procedure ResetarBarra();
 
   end;
@@ -146,9 +147,9 @@ begin
      input := InputBox('Binarização', 'Valor do limiar:', '');
 
      if input <> '' then
-        limiar := floor(strToInt(input))
+        limiar := Floor(strToInt(input))
      else
-         limiar := 255/2;
+         limiar := Floor(255/2);
 
      for y := 0 to (ImagemOriginal.height - 1) do
       for x:= 0 to (ImagemOriginal.width - 1) do
@@ -203,14 +204,47 @@ end;
 
 procedure TForm1.MenuItemLaplacianoClick(Sender: TObject);
 var
-  x, y : Integer;
+  x, y: Integer;
   cor : TColor;
-  vermelho, verde, azul : Integer;
-
+  vermelho, verde, azul, cinza : Integer;
+  cinzas : array of array of Integer;
 begin
-   AjustandoBarra();
-     ResetarBarra();
+     SetLength(cinzas, ImagemOriginal.Width, ImagemOriginal.Height);
 
+     AjustandoBarra();
+
+     vermelho := 0;
+     verde := 0;
+     azul := 0;
+
+     for y := 1 to (ImagemOriginal.height - 2) do
+         for x:= 1 to (ImagemOriginal.width - 2) do
+         begin
+              ReceberCores(vermelho, verde, azul, x, y);
+              cinzas[x,y] := round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+              Atualizar(y);
+         end;
+
+     for y := 1 to (ImagemOriginal.height - 2) do
+         for x:= 1 to (ImagemOriginal.width - 2) do
+         begin
+
+              cinza := (4 * cinzas[x,y])
+              - cinzas[x+1,y] - cinzas[x-1,y]
+              - cinzas[x,y+1] - cinzas[x,y-1];
+
+              if cinza < 0 then
+                   cinza := 0
+              else if cinza > 255 then
+                   cinza := 255;
+
+              cor := RGB(cinza, cinza, cinza);
+              ImagemResultado.Canvas.Pixels[x, y] := cor;
+
+              Atualizar(y);
+         end;
+
+   ResetarBarra();
 end;
 
 procedure TForm1.MenuItemMediaClick(Sender: TObject);
@@ -326,6 +360,11 @@ begin
           Atualizar(y);
       end;
   ResetarBarra();
+end;
+
+procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
+begin
+
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);

@@ -1,0 +1,96 @@
+object Form2: TForm2
+  Left = 871
+  Height = 126
+  Top = 140
+  Width = 241
+  Caption = 'Form2'
+  ClientHeight = 126
+  ClientWidth = 241
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  LCLVersion = '3.8.0.0'
+  object LabelR: TLabel
+    Left = 16
+    Height = 20
+    Top = 24
+    Width = 12
+    Caption = 'R:'
+  end
+  object LabelG: TLabel
+    Left = 15
+    Height = 20
+    Top = 96
+    Width = 13
+    Caption = 'G:'
+  end
+  object LabelB: TLabel
+    Left = 16
+    Height = 20
+    Top = 60
+    Width = 12
+    Caption = 'B:'
+  end
+  object LabelH: TLabel
+    Left = 136
+    Height = 20
+    Top = 24
+    Width = 14
+    Caption = 'H:'
+  end
+  object LabelS: TLabel
+    Left = 139
+    Height = 20
+    Top = 60
+    Width = 11
+    Caption = 'S:'
+  end
+  object LabelV: TLabel
+    Left = 138
+    Height = 20
+    Top = 96
+    Width = 12
+    Caption = 'V:'
+  end
+  object EditR: TEdit
+    Left = 32
+    Height = 28
+    Top = 16
+    Width = 72
+    TabOrder = 0
+  end
+  object EditG: TEdit
+    Left = 32
+    Height = 28
+    Top = 88
+    Width = 72
+    TabOrder = 1
+  end
+  object EditB: TEdit
+    Left = 32
+    Height = 28
+    Top = 52
+    Width = 72
+    TabOrder = 2
+  end
+  object EditH: TEdit
+    Left = 152
+    Height = 28
+    Top = 16
+    Width = 72
+    TabOrder = 3
+  end
+  object EditS: TEdit
+    Left = 152
+    Height = 28
+    Top = 52
+    Width = 72
+    TabOrder = 4
+  end
+  object EditV: TEdit
+    Left = 152
+    Height = 28
+    Top = 88
+    Width = 72
+    TabOrder = 5
+  end
+end
