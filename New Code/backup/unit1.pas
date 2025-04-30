@@ -67,6 +67,7 @@ type
     procedure MenuItemAbrirClick(Sender: TObject);
     procedure MenuItemBinarizacaoClick(Sender: TObject);
     procedure MenuItemCinzaClick(Sender: TObject);
+    procedure MenuItemCompressaoClick(Sender: TObject);
     procedure MenuItemConversoresClick(Sender: TObject);
     procedure MenuItemEqualizacaoClick(Sender: TObject);
     procedure MenuItemFecharClick(Sender: TObject);
@@ -76,6 +77,7 @@ type
     procedure MenuItemNegativoClick(Sender: TObject);
     procedure MenuItemRestaurarClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
+    procedure MoverImagemClick(Sender: TObject);
     procedure MenuItemSepararClick(Sender: TObject);
     procedure MenuItemSepararColoridoClick(Sender: TObject);
   private
@@ -84,7 +86,7 @@ type
   public
     procedure ReceberCores(var r,g,b : Integer; x,y : Integer);
     procedure Atualizar(y : Integer);
-    procedure AjustandoBarra(        );
+    procedure AjustandoBarra();
     procedure ResetarBarra();
 
   end;
@@ -202,6 +204,54 @@ begin
           cor := RGB(cinza, cinza, cinza);
 
           ImagemResultado.Canvas.Pixels[x, y] := cor;
+          Atualizar(y);
+      end;
+  ResetarBarra();
+end;
+
+procedure TForm1.MenuItemCompressaoClick(Sender: TObject);
+var
+  x, y : Integer;
+  vermelho, verde, azul, cinza : Integer;
+  gama, c, s : Double;
+  s1, s2 : String;
+begin
+  AjustandoBarra();
+
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+  cinza := 0;
+
+  if InputQuery('Compressão S = c*r^(gama)', 'Valor de gama:', s1) then
+    if InputQuery('Compressão S = c*r^(gama)', 'Valor de c:',  s2) then
+      begin
+           if s1 <> '' then
+              gama := StrToFloat(StringReplace(s1, '.', ',', [rfReplaceAll]))
+           else
+               gama := 1.0;
+
+           if s2 <> '' then
+              c := StrToFloat(StringReplace(s2, '.', ',', [rfReplaceAll]))
+           else
+               c := 1.0;
+      end;
+
+  for y := 0 to ImagemOriginal.Height - 1 do
+      for x := 0 to ImagemOriginal.Width - 1 do
+      begin
+          ReceberCores(vermelho, verde, azul, x, y);
+          cinza := Round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+
+          s := c * Power(cinza / 255, gama);
+          s := Round(s * 255);
+
+          if s > 255 then
+        s := 255
+      else if s < 0 then
+        s := 0;
+
+          ImagemResultado.Canvas.Pixels[x, y] := RGB(Round(s), Round(s), Round(s));
           Atualizar(y);
       end;
   ResetarBarra();
@@ -464,6 +514,17 @@ end;
 procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
 begin
   Form2.Show();
+end;
+
+procedure TForm1.MoverImagemClick(Sender: TObject);
+var
+  x, y : Integer;
+begin
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+          ImagemOriginal.Canvas.Pixels[x, y] := ImagemResultado.Canvas.Pixels[x, y];
+      end;
 end;
 
 procedure TForm1.MenuItemSepararClick(Sender: TObject);

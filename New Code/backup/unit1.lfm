@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 272
+  Left = 289
   Height = 502
-  Top = 99
-  Width = 532
+  Top = 91
+  Width = 590
   Caption = 'Form1'
   ClientHeight = 502
-  ClientWidth = 532
+  ClientWidth = 590
   Menu = MainMenu
   LCLVersion = '3.8.0.0'
   object MoverImagem: TButton
@@ -15,6 +15,7 @@ object Form1: TForm1
     Width = 75
     Caption = '<--'
     TabOrder = 0
+    OnClick = MoverImagemClick
   end
   object ImagemOriginal: TImage
     Left = 13
@@ -260,6 +261,7 @@ object Form1: TForm1
       end
       object MenuItemCompressao: TMenuItem
         Caption = 'Compressão Dinâmica'
+        OnClick = MenuItemCompressaoClick
       end
     end
   end

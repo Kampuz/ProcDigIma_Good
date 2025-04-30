@@ -34,7 +34,6 @@ type
     LabelH: TLabel;
     LabelS: TLabel;
     LabelV: TLabel;
-    MenuItem1: TMenuItem;
     MenuItemEqualizacao: TMenuItem;
     MenuItemBinarizacao: TMenuItem;
     MenuItemCompressao: TMenuItem;
@@ -63,10 +62,10 @@ type
     Separator1: TMenuItem;
     procedure ImagemOriginalMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
-    procedure MenuItem1Click(Sender: TObject);
     procedure MenuItemAbrirClick(Sender: TObject);
     procedure MenuItemBinarizacaoClick(Sender: TObject);
     procedure MenuItemCinzaClick(Sender: TObject);
+    procedure MenuItemCompressaoClick(Sender: TObject);
     procedure MenuItemConversoresClick(Sender: TObject);
     procedure MenuItemEqualizacaoClick(Sender: TObject);
     procedure MenuItemFecharClick(Sender: TObject);
@@ -74,17 +73,15 @@ type
     procedure MenuItemMediaClick(Sender: TObject);
     procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
-    procedure MenuItemRestaurarClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
-    procedure MenuItemSepararClick(Sender: TObject);
-    procedure MenuItemSepararColoridoClick(Sender: TObject);
+    procedure MoverImagemClick(Sender: TObject);
   private
 
 
   public
     procedure ReceberCores(var r,g,b : Integer; x,y : Integer);
     procedure Atualizar(y : Integer);
-    procedure AjustandoBarra(        );
+    procedure AjustandoBarra();
     procedure ResetarBarra();
 
   end;
@@ -129,11 +126,6 @@ begin
   EditH.Text := FloatToStr(matriz);
   EditS.Text := FloatToStr(saturacao);
   EditV.Text := FloatToStr(valor);
-
-end;
-
-procedure TForm1.MenuItem1Click(Sender: TObject);
-begin
 
 end;
 
@@ -202,6 +194,54 @@ begin
           cor := RGB(cinza, cinza, cinza);
 
           ImagemResultado.Canvas.Pixels[x, y] := cor;
+          Atualizar(y);
+      end;
+  ResetarBarra();
+end;
+
+procedure TForm1.MenuItemCompressaoClick(Sender: TObject);
+var
+  x, y : Integer;
+  vermelho, verde, azul, cinza : Integer;
+  gama, c, s : Double;
+  s1, s2 : String;
+begin
+  AjustandoBarra();
+
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+  cinza := 0;
+
+  if InputQuery('Compressão S = c*r^(gama)', 'Valor de gama:', s1) then
+    if InputQuery('Compressão S = c*r^(gama)', 'Valor de c:',  s2) then
+      begin
+           if s1 <> '' then
+              gama := StrToFloat(StringReplace(s1, '.', ',', [rfReplaceAll]))
+           else
+               gama := 1.0;
+
+           if s2 <> '' then
+              c := StrToFloat(StringReplace(s2, '.', ',', [rfReplaceAll]))
+           else
+               c := 1.0;
+      end;
+
+  for y := 0 to ImagemOriginal.Height - 1 do
+      for x := 0 to ImagemOriginal.Width - 1 do
+      begin
+          ReceberCores(vermelho, verde, azul, x, y);
+          cinza := Round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+
+          s := c * Power(cinza / 255, gama);
+          s := Round(s * 255);
+
+          if s > 255 then
+        s := 255
+      else if s < 0 then
+        s := 0;
+
+          ImagemResultado.Canvas.Pixels[x, y] := RGB(Round(s), Round(s), Round(s));
           Atualizar(y);
       end;
   ResetarBarra();
@@ -435,96 +475,20 @@ begin
   ResetarBarra();
 end;
 
-procedure TForm1.MenuItemRestaurarClick(Sender: TObject);
-var
-  x, y : Integer;
-  cor : TColor;
-  vermelho, verde, azul : Integer;
-begin
-  AjustandoBarra();
-  vermelho := 0;
-  verde := 0;
-  azul := 0;
-  for y := 0 to (ImagemOriginal.height - 1) do
-    for x:= 0 to (ImagemOriginal.width - 1) do
-    begin
-      cor := CanalVermelho.Canvas.Pixels[x, y];
-        vermelho := GetRValue(cor);
-      cor := CanalVerde.Canvas.Pixels[x, y];
-        verde := GetGValue(cor);
-      cor := CanalAzul.Canvas.Pixels[x, y];
-        azul := GetBValue(cor);
-
-      cor := RGB(vermelho, verde, azul);
-
-      ImagemResultado.Canvas.Pixels[x, y] := cor;
-      Atualizar(y);
-    end;
-  ResetarBarra();
-end;
-
 procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
 begin
   Form2.Show();
 end;
 
-procedure TForm1.MenuItemSepararClick(Sender: TObject);
+procedure TForm1.MoverImagemClick(Sender: TObject);
 var
   x, y : Integer;
-  cor : TColor;
-  vermelho, verde, azul : Integer;
 begin
-  AjustandoBarra();
-  vermelho := 0;
-  verde := 0;
-  azul := 0;
   for y := 0 to (ImagemOriginal.height - 1) do
       for x:= 0 to (ImagemOriginal.width - 1) do
       begin
-           ReceberCores(vermelho, verde, azul, x, y);
-
-           cor := RGB(vermelho, vermelho, vermelho);
-           CanalVermelho.Canvas.Pixels[x, y] := cor;
-
-           cor := RGB(verde, verde, verde);
-           CanalVerde.Canvas.Pixels[x, y] := cor;
-
-           cor := RGB(azul, azul, azul);
-           CanalAzul.Canvas.Pixels[x, y] := cor;
-
-           Atualizar(y);
+          ImagemOriginal.Canvas.Pixels[x, y] := ImagemResultado.Canvas.Pixels[x, y];
       end;
-  ResetarBarra();
-
-end;
-
-procedure TForm1.MenuItemSepararColoridoClick(Sender: TObject);
-var
-  x, y : Integer;
-  cor : TColor;
-  vermelho, verde, azul : Integer;
-begin
-  AjustandoBarra();
-  vermelho := 0;
-  verde := 0;
-  azul := 0;
-  for y := 0 to (ImagemOriginal.height - 1) do
-      for x:= 0 to (ImagemOriginal.width - 1) do
-      begin
-           ReceberCores(vermelho, verde, azul, x, y);
-
-           cor := RGB(vermelho, 0, 0);
-           CanalVermelho.Canvas.Pixels[x, y] := cor;
-
-           cor := RGB(0, verde, 0);
-           CanalVerde.Canvas.Pixels[x, y] := cor;
-
-           cor := RGB(0, 0, azul);
-           CanalAzul.Canvas.Pixels[x, y] := cor;
-
-           Atualizar(y);
-      end;
-  ResetarBarra();
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);

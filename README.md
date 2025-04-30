@@ -1,15 +1,17 @@
 # ProcDigIma_Good
-**Trabalho de Processamento Digital de Imagens**
 
-### Conversor [X]
+**Trabalho de Processamento Digital de Imagens**.
 
-### Filtros
-- Cinza [X]
-- Negativo [X]
-- Média [X]
-- Mediana [X]
-- Laplaciano [X]
-- Sobel [ ]
+## [X] Conversor
+
+## Filtros
+
+- [X] Cinza
+- [X] Negativo
+- [X] Média
+- [X] Mediana
+- [X] Laplaciano
+- [ ] Sobel
 
 ### Canais
 
@@ -17,10 +19,10 @@
 - [X] Separação Colorida
 - [X] Restauração
 
-### Ruído [ ]
+## [ ] Ruído
 
-### Equalização [X]
+## [X] Equalização
 
-### Binarização [X]
+## [X] Binarização
 
-### Compressão [ ]
+## [X] Compressão
