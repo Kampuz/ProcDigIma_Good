@@ -1,23 +1,26 @@
 # ProcDigIma_Good
-**Trabalho de Processamento Digital de Imagens**
 
-### Conversor
-- HSV / RGB [ ]
+**Trabalho de Processamento Digital de Imagens**.
 
-### Filtros
-- Cinza [X]
-- Negativo [X]
-- Média [X]
-- Mediana [X]
-- Laplaciano [X]
-- Sobel [ ]
+## Conversor
 
-### Canais [ ]
+- [ ] HSV / RGB
 
-### Ruído [ ]
+## Filtros
 
-### Equalização [ ]
+- [X] Cinza
+- [X] Negativo
+- [X] Média
+- [X] Mediana
+- [X] Laplaciano
+- [ ] Sobel
 
-### Binarização [X]
+## [ ] Canais
 
-### Compressão [ ]
+## [ ] Ruído
+
+## [ ] Equalização
+
+## [X] Binarização
+
+## [ ] Compressão
