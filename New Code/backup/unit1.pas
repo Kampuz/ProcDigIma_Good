@@ -74,6 +74,7 @@ type
     procedure MenuItemMedianaClick(Sender: TObject);
     procedure MenuItemNegativoClick(Sender: TObject);
     procedure MenuItemRGBparaHSVClick(Sender: TObject);
+    procedure MenuItemRuidosClick(Sender: TObject);
   private
 
 
@@ -240,7 +241,7 @@ begin
       else if s < 0 then
         s := 0;
 
-          ImagemResultado.Canvas.Pixels[x, y] := RGB(s, s, s);
+          ImagemResultado.Canvas.Pixels[x, y] := RGB(Round(s), Round(s), Round(s));
           Atualizar(y);
       end;
   ResetarBarra();
@@ -477,6 +478,51 @@ end;
 procedure TForm1.MenuItemRGBparaHSVClick(Sender: TObject);
 begin
   Form2.Show();
+end;
+
+procedure TForm1.MenuItemRuidosClick(Sender: TObject);
+var
+  x, y : Integer;
+  vermelho, verde, azul : Integer;
+  r, intensidade : Double;
+  branco : Boolean;
+  input : String;
+begin
+  AjustandoBarra();
+
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  input := InputBox('Adicionar Ruídos', 'Intensidade dos ruídos:', '');
+
+     if input <> '' then
+        intensidade := strToFloat(StringReplace(input, '.', ',', [rfReplaceAll])) / 100
+     else
+         intensidade := 10/100;
+
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+           r := Random;
+           if r < intensidade then
+           begin
+                branco := (Random < 0.5);
+
+                if branco then
+                   ImagemResultado.Canvas.Pixels[x, y] := RGB(255,255,255)
+                else
+                     ImagemResultado.Canvas.Pixels[x, y] := RGB(0,0,0);
+           end
+          else
+          begin
+              ReceberCores(vermelho, verde, azul, x, y);
+              ImagemResultado.Canvas.Pixels[x, y] := RGB(vermelho, verde, azul);
+          end;
+
+          Atualizar(y);
+      end;
+  ResetarBarra();
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
