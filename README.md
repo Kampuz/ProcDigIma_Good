@@ -19,4 +19,4 @@
 
 ### Binarização [X]
 
-### Compressão [ ]
+### Compressão [X]
