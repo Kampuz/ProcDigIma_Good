@@ -81,6 +81,7 @@ type
     procedure MenuItemSalvarClick(Sender: TObject);
     procedure MenuItemSepararClick(Sender: TObject);
     procedure MenuItemSobelClick(Sender: TObject);
+    procedure MoverImagemClick(Sender: TObject);
   private
 
 
@@ -597,7 +598,7 @@ procedure TForm1.MenuItemSalvarClick(Sender: TObject);
 var
   fileName : String;
 begin
-  fileName := InputBox('Salvar Imagem', 'Nome da Imagem:', 'Imagem.png');
+  fileName := InputBoxz('Salvar Imagem', 'Nome da Imagem:', 'Imagem.png');
   try
     ImagemResultado.Picture.SaveToFile(fileName);
   finally
@@ -685,6 +686,17 @@ begin
       end;
 
   ResetarBarra;
+end;
+
+procedure TForm1.MoverImagemClick(Sender: TObject);
+var
+  x, y : Integer;
+begin
+  for y := 0 to (ImagemOriginal.height - 1) do
+      for x:= 0 to (ImagemOriginal.width - 1) do
+      begin
+          ImagemOriginal.Canvas.Pixels[x, y] := ImagemResultado.Canvas.Pixels[x, y];
+      end;
 end;
 
 procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
