@@ -2,27 +2,27 @@
 
 **Trabalho de Processamento Digital de Imagens**.
 
-## Conversor [X]
+## [X] Conversor
 
-## Filtros
+## [X] Filtros
 
-- Cinza [X]
-- Negativo [X]
-- Média [X]
-- Mediana [X]
-- Laplaciano [X]
-- Sobel [ ]
+- [X] Cinza
+- [X] Negativo
+- [X] Média
+- [X] Mediana
+- [X] Laplaciano
+- [X] Sobel
 
-## Canais
+## [X] Canais
 
 - [X] Separar
 - [X] Separar Colorido
 - [X] Restaurar
 
-## Ruído [X]
+## [X] Ruído
 
-## Equalização [X]
+## [X] Equalização
 
-## Binarização [X]
+## [X] Binarização
 
-## Compressão [X]
+## [X] Compressão
