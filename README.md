@@ -15,10 +15,11 @@
 
 ## Canais
 
-- [ ] Separar
-- [ ] Restaurar
+- [X] Separar
+- [X] Separar Colorido
+- [X] Restaurar
 
-## Ruído [ ]
+## Ruído [X]
 
 ## Equalização [X]
 
