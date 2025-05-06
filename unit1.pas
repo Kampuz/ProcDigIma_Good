@@ -598,7 +598,7 @@ procedure TForm1.MenuItemSalvarClick(Sender: TObject);
 var
   fileName : String;
 begin
-  fileName := InputBoxs('Salvar Imagem', 'Nome da Imagem:', 'Imagem.png');
+  fileName := InputBox('Salvar Imagem', 'Nome da Imagem:', 'Imagem.png');
   try
     ImagemResultado.Picture.SaveToFile(fileName);
   finally
