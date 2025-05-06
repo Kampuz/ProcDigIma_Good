@@ -1,6 +1,6 @@
 # ProcDigIma_Good
 
-**Trabalho de Processamento Digital de Imagens**.
+**Trabalho de Processamento Digital de Imagens feito por Abigail Sayury Nakashima e Miguel de Campos Rodrigues Moret**.
 
 ## [X] Conversor
 
