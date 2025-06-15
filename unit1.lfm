@@ -1,184 +1,185 @@
 object Form1: TForm1
-  Left = 427
-  Height = 628
-  Top = 233
-  Width = 738
+  Left = 1103
+  Height = 809
+  Top = 98
+  Width = 876
   Caption = 'Form1'
-  ClientHeight = 628
-  ClientWidth = 738
+  ClientHeight = 809
+  ClientWidth = 876
   DesignTimePPI = 120
   Menu = MainMenu
   LCLVersion = '3.8.0.0'
   object MoverImagem: TButton
-    Left = 280
+    Left = 72
     Height = 31
-    Top = 40
+    Top = 288
     Width = 94
     Caption = '<--'
     TabOrder = 0
     OnClick = MoverImagemClick
   end
   object ImagemOriginal: TImage
-    Left = 16
+    Left = 24
     Height = 200
     Top = 24
-    Width = 200
+    Width = 392
     OnMouseMove = ImagemOriginalMouseMove
   end
   object ImagemResultado: TImage
-    Left = 448
-    Height = 200
+    Left = 456
+    Height = 144
     Top = 24
-    Width = 200
+    Width = 272
+    OnClick = ImagemResultadoClick
   end
   object CanalVermelho: TImage
-    Left = 16
+    Left = 328
     Height = 200
-    Top = 248
+    Top = 272
     Width = 200
   end
   object CanalVerde: TImage
-    Left = 232
+    Left = 544
     Height = 200
-    Top = 248
+    Top = 272
     Width = 200
   end
   object CanalAzul: TImage
-    Left = 448
+    Left = 768
     Height = 200
-    Top = 248
+    Top = 272
     Width = 200
   end
   object LabelX: TLabel
-    Left = 232
+    Left = 24
     Height = 20
-    Top = 88
+    Top = 336
     Width = 12
     Caption = 'X:'
   end
   object LabelY: TLabel
-    Left = 344
+    Left = 136
     Height = 20
-    Top = 88
+    Top = 336
     Width = 11
     Caption = 'Y:'
   end
   object LabelR: TLabel
-    Left = 232
+    Left = 24
     Height = 20
-    Top = 132
+    Top = 380
     Width = 12
     Caption = 'R:'
   end
   object LabelG: TLabel
-    Left = 232
+    Left = 24
     Height = 20
-    Top = 168
+    Top = 416
     Width = 13
     Caption = 'G:'
   end
   object LabelB: TLabel
-    Left = 232
+    Left = 24
     Height = 20
-    Top = 204
+    Top = 452
     Width = 12
     Caption = 'B:'
   end
   object LabelH: TLabel
-    Left = 344
+    Left = 136
     Height = 20
-    Top = 132
+    Top = 380
     Width = 14
     Caption = 'H:'
   end
   object LabelS: TLabel
-    Left = 344
+    Left = 136
     Height = 20
-    Top = 168
+    Top = 416
     Width = 11
     Caption = 'S:'
   end
   object LabelV: TLabel
-    Left = 344
+    Left = 136
     Height = 20
-    Top = 204
+    Top = 452
     Width = 12
     Caption = 'V:'
   end
   object EditX: TEdit
-    Left = 248
+    Left = 40
     Height = 28
-    Top = 80
+    Top = 328
     Width = 72
     NumbersOnly = True
     TabOrder = 1
   end
   object EditR: TEdit
-    Left = 248
+    Left = 40
     Height = 28
-    Top = 124
+    Top = 372
     Width = 72
     NumbersOnly = True
     ReadOnly = True
     TabOrder = 2
   end
   object EditG: TEdit
-    Left = 248
+    Left = 40
     Height = 28
-    Top = 160
+    Top = 408
     Width = 72
     NumbersOnly = True
     ReadOnly = True
     TabOrder = 3
   end
   object EditB: TEdit
-    Left = 248
+    Left = 40
     Height = 28
-    Top = 196
+    Top = 444
     Width = 72
     NumbersOnly = True
     ReadOnly = True
     TabOrder = 4
   end
   object EditY: TEdit
-    Left = 360
+    Left = 152
     Height = 28
-    Top = 80
+    Top = 328
     Width = 72
     NumbersOnly = True
     TabOrder = 5
   end
   object EditH: TEdit
-    Left = 360
+    Left = 152
     Height = 28
-    Top = 124
+    Top = 372
     Width = 72
     NumbersOnly = True
     ReadOnly = True
     TabOrder = 6
   end
   object EditS: TEdit
-    Left = 360
+    Left = 152
     Height = 28
-    Top = 160
+    Top = 408
     Width = 72
     NumbersOnly = True
     ReadOnly = True
     TabOrder = 7
   end
   object EditV: TEdit
-    Left = 360
+    Left = 152
     Height = 28
-    Top = 196
+    Top = 444
     Width = 72
     NumbersOnly = True
     ReadOnly = True
     TabOrder = 8
   end
   object ProgressBar: TProgressBar
-    Left = 264
+    Left = 56
     Height = 25
-    Top = 8
+    Top = 256
     Width = 125
     TabOrder = 9
   end
@@ -231,20 +232,36 @@ object Form1: TForm1
           Caption = '&Sobel'
           OnClick = MenuItemSobelClick
         end
+        object MenuItemMinimo: TMenuItem
+          Caption = 'Mínimo'
+          OnClick = MenuItemMinimoClick
+        end
+        object MenuItemMaximo: TMenuItem
+          Caption = 'Máximo'
+          OnClick = MenuItemMaximoClick
+        end
+        object MenuItemPontoMedio: TMenuItem
+          Caption = 'Ponto Médio'
+          OnClick = MenuItemPontoMedioClick
+        end
       end
       object MenuItemCanais: TMenuItem
-        Caption = '&Canais'
+        Caption = '&Cores'
         object MenuItemSeparar: TMenuItem
-          Caption = '&Separar'
+          Caption = '&Separar Intensidade'
           OnClick = MenuItemSepararClick
+        end
+        object MenuItemSepararColorido: TMenuItem
+          Caption = 'Separar &Cor'
+          OnClick = MenuItemSepararColoridoClick
         end
         object MenuItemRestaurar: TMenuItem
           Caption = '&Restaurar'
           OnClick = MenuItemRestaurarClick
         end
-        object MenuItem1: TMenuItem
-          Caption = 'Separar Colorido'
-          OnClick = MenuItem1Click
+        object MenuItemPseudoCores: TMenuItem
+          Caption = '&Pseudo Cores'
+          OnClick = MenuItemPseudoCoresClick
         end
       end
       object MenuItemConversores: TMenuItem
@@ -258,6 +275,10 @@ object Form1: TForm1
       object MenuItemEqualizacao: TMenuItem
         Caption = '&Equalização'
         OnClick = MenuItemEqualizacaoClick
+      end
+      object MenuItemEqualizacaoL: TMenuItem
+        Caption = 'Equalização de L'
+        OnClick = MenuItemEqualizacaoLClick
       end
       object MenuItemBinarizacao: TMenuItem
         Caption = '&Binarização'

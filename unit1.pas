@@ -34,7 +34,12 @@ type
     LabelH: TLabel;
     LabelS: TLabel;
     LabelV: TLabel;
-    MenuItem1: TMenuItem;
+    MenuItemEqualizacaoL: TMenuItem;
+    MenuItemPseudoCores: TMenuItem;
+    MenuItemSepararColorido: TMenuItem;
+    MenuItemPontoMedio: TMenuItem;
+    MenuItemMinimo: TMenuItem;
+    MenuItemMaximo: TMenuItem;
     MenuItemEqualizacao: TMenuItem;
     MenuItemBinarizacao: TMenuItem;
     MenuItemCompressao: TMenuItem;
@@ -63,7 +68,13 @@ type
     Separator1: TMenuItem;
     procedure ImagemOriginalMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
-    procedure MenuItem1Click(Sender: TObject);
+    procedure ImagemResultadoClick(Sender: TObject);
+    procedure MenuItemEqualizacaoLClick(Sender: TObject);
+    procedure MenuItemMaximoClick(Sender: TObject);
+    procedure MenuItemPontoMedioClick(Sender: TObject);
+    procedure MenuItemPseudoCoresClick(Sender: TObject);
+    procedure MenuItemSepararColoridoClick(Sender: TObject);
+    procedure MenuItemMinimoClick(Sender: TObject);
     procedure MenuItemAbrirClick(Sender: TObject);
     procedure MenuItemBinarizacaoClick(Sender: TObject);
     procedure MenuItemCinzaClick(Sender: TObject);
@@ -95,6 +106,8 @@ type
 
   procedure OrdenarArray(var arr : array of Integer);
   procedure ConverterRGBparaHSV(r, g, b : Integer; var h, s, v : Double);
+  procedure ConverterRGBparaHSL(r, g, b: Integer; var h, s, l: Double);
+  procedure ConverterHSLparaRGB(h, s, l: Double; var r, g, b: Integer);
   procedure ConverterHSVparaRGB(h, s, v : Double; var r,g,b : Integer);
 
 var
@@ -136,7 +149,196 @@ begin
 
 end;
 
-procedure TForm1.MenuItem1Click(Sender: TObject);
+procedure TForm1.MenuItemEqualizacaoLClick(Sender: TObject);
+var
+  x, y, i: Integer;
+  vermelho, verde, azul : Integer;
+  h, s, l : Double;
+  pixels, soma : Integer;
+  intensidade: array of array of Integer;
+  matiz, saturacao : array of array of Double;
+  histOriginal, histResultado, tabela : array[0..255] of Integer;
+begin
+  AjustandoBarra();
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+  h := 0;
+  s := 0;
+  l := 0;
+  soma := 0;
+  pixels := ImagemOriginal.Height * ImagemOriginal.Width;
+
+  SetLength(intensidade, ImagemOriginal.Width);
+  SetLength(matiz, ImagemOriginal.Width);
+  SetLength(saturacao, ImagemOriginal.Width);
+  for x := 0 to ImagemOriginal.Width - 1 do
+  begin
+      SetLength(intensidade[x], ImagemOriginal.Height);
+      SetLength(matiz[x], ImagemOriginal.Height);
+      SetLength(saturacao[x], ImagemOriginal.Height);
+  end;
+
+  for i := 0 to 255 do
+  begin
+       histOriginal[i] := 0;
+       histResultado[i] := 0;
+  end;
+
+  for y := 0 to ImagemOriginal.Height - 1 do
+    for x := 0 to ImagemOriginal.Width - 1 do
+    begin
+      ReceberCores(vermelho, verde, azul, x, y);
+      ConverterRGBparaHSL(vermelho, verde, azul, h, s, l);
+      matiz[x,y] := h;
+      saturacao[x,y] := s;
+      intensidade[x,y] := Floor(l * 255);
+      Inc(histOriginal[intensidade[x,y]]);
+      Atualizar(y);
+    end;
+
+  for i := 0 to 255 do
+  begin
+    soma += histOriginal[i];
+    histResultado[i] := soma;
+    tabela[i] := Floor(255 * (histResultado[i] / pixels));
+  end;
+
+  for y := 0 to ImagemOriginal.Height - 1 do
+    for x := 0 to ImagemOriginal.Width - 1 do
+    begin
+
+      l := tabela[intensidade[x,y]] / 255;
+
+      ConverterHSLparaRGB(matiz[x,y], saturacao[x,y], l, vermelho, verde, azul);
+      ImagemResultado.Canvas.Pixels[x, y] := RGB(vermelho, verde, azul);
+      Atualizar(y);
+    end;
+  ResetarBarra();
+end;
+
+procedure TForm1.MenuItemMaximoClick(Sender: TObject);
+var
+  x, y, i, j, k : Integer;
+  vermelho, verde, azul, cinza : Integer;
+  arr : array[0..8] of Integer;
+  max : Integer;
+begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  AjustandoBarra();
+
+ for y := 1 to (ImagemOriginal.Height - 2) do
+     for x := 1 to (ImagemOriginal.Width - 2) do
+     begin
+         k := 0;
+         for j := -1 to 1 do
+             for i := -1 to 1 do
+             begin
+                 ReceberCores(vermelho, verde, azul, (x+i), (y+j));
+                 cinza := round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+
+                        arr[k] := cinza;
+                        Inc(k);
+                   end;
+
+           max := arr[0];
+
+           for k := 1 to 8 do
+               if arr[k] > max then
+                  max := arr[k];
+
+           ImagemResultado.Canvas.Pixels[x, y] := RGB(max, max, max);
+
+           Atualizar(y)
+      end;
+
+  ResetarBarra();
+end;
+
+procedure TForm1.MenuItemPontoMedioClick(Sender: TObject);
+var
+  x, y, i, j, k : Integer;
+  vermelho, verde, azul, cinza : Integer;
+  arr : array[0..8] of Integer;
+  min, medio, max : Integer;
+begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  AjustandoBarra();
+
+ for y := 1 to (ImagemOriginal.Height - 2) do
+     for x := 1 to (ImagemOriginal.Width - 2) do
+     begin
+         k := 0;
+         for j := -1 to 1 do
+             for i := -1 to 1 do
+             begin
+                 ReceberCores(vermelho, verde, azul, (x+i), (y+j));
+                 cinza := round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+
+                        arr[k] := cinza;
+                        Inc(k);
+                   end;
+
+         min := arr[0];
+         max := arr[0];
+
+         for k := 1 to 8 do
+             if arr[k] > max then
+                max := arr[k];
+             if arr[k] < min then
+                min := arr[k];
+         medio := Floor((min + max) / 2);
+
+         ImagemResultado.Canvas.Pixels[x, y] := RGB(medio, medio, medio);
+
+         Atualizar(y)
+      end;
+
+  ResetarBarra();
+end;
+
+procedure TForm1.MenuItemPseudoCoresClick(Sender: TObject);
+var
+  x, y : Integer;
+  cor : TColor;
+  vermelho, verde, azul : Integer;
+  intensidade, setor : Integer;
+begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  AjustandoBarra();
+
+ for y := 0 to (ImagemOriginal.Height - 1) do
+     for x := 0 to (ImagemOriginal.Width - 1) do
+     begin
+
+          cor := ImagemOriginal.Canvas.Pixels[x, y];
+          intensidade := GetRValue(cor);
+
+          setor := Floor(intensidade / 64);
+          case setor of
+               0: begin vermelho := 0; verde := 0; azul := intensidade*4; end;
+               1: begin vermelho := 0; verde := (intensidade-64)*4; azul := 255; end;
+               2: begin vermelho := 0; verde := 255; azul := 255-(intensidade-128)*4; end;
+               3: begin vermelho := (intensidade-192)*4; verde := 255; azul := 0; end;
+          end;
+          ImagemResultado.Canvas.Pixels[x, y] := RGB(vermelho, verde, azul);
+
+          Atualizar(y)
+      end;
+
+  ResetarBarra();
+end;
+
+procedure TForm1.MenuItemSepararColoridoClick(Sender: TObject);
 var
   x, y : Integer;
   cor : TColor;
@@ -166,10 +368,100 @@ begin
 
 end;
 
+procedure TForm1.MenuItemMinimoClick(Sender: TObject);
+var
+  x, y, i,j, k : Integer;
+  vermelho, verde, azul, cinza : Integer;
+  arr : array[0..8] of Integer;
+  min : Integer;
+begin
+  vermelho := 0;
+  verde := 0;
+  azul := 0;
+
+  ajustandoBarra();
+
+  for y := 1 to (ImagemOriginal.Height - 2) do
+      for x := 1 to (ImagemOriginal.Width - 2) do
+      begin
+           k := 0;
+           for j := -1 to 1 do
+               for i := -1 to 1 do
+                   begin
+                        ReceberCores(vermelho, verde, azul, (x+i), (y+j));
+
+                        cinza := round(0.299 * vermelho + 0.587 * verde + 0.114 * azul);
+
+                        arr[k] := cinza;
+                        Inc(k);
+                   end;
+
+           min := arr[0];
+
+           for k := 1 to 8 do
+               if arr[k] < min then
+                  min := arr[k];
+
+           ImagemResultado.Canvas.Pixels[x, y] := RGB(min, min, min);
+
+           Atualizar(y)
+      end;
+
+  ResetarBarra();
+end;
+
 procedure TForm1.MenuItemAbrirClick(Sender: TObject);
 begin
   if(OpenDialog.Execute) then
-                         ImagemOriginal.Picture.LoadFromFile(OpenDialog.FileName);
+  begin
+       ImagemOriginal.Picture.LoadFromFile(OpenDialog.FileName);
+
+       ImagemOriginal.Height := ImagemOriginal.Picture.Height;
+       ImagemOriginal.Width := ImagemOriginal.Picture.Width;
+
+       ImagemResultado.Height := ImagemOriginal.Height;
+       ImagemResultado.Width := ImagemOriginal.Width;
+       ImagemResultado.Left := ImagemOriginal.Left + ImagemOriginal.Width + 10;
+
+       CanalVermelho.Height := ImagemOriginal.Height;
+       CanalVermelho.Width := ImagemOriginal.Width;
+       CanalVermelho.Top := ImagemOriginal.Top + ImagemOriginal.Height + 10;
+
+       CanalVerde.Height := ImagemOriginal.Height;
+       CanalVerde.Width := ImagemOriginal.Width;
+       CanalVerde.Left := CanalVermelho.Left + CanalVermelho.Width + 10;
+       CanalVerde.Top := CanalVermelho.Top;
+
+       CanalAzul.Height := ImagemOriginal.Height;
+       CanalAzul.Width := ImagemOriginal.Width;
+       CanalAzul.Left := CanalVerde.Left + CanalVerde.Width + 10;
+       CanalAzul.Top := CanalVerde.Top;
+
+       ProgressBar.Top := CanalVermelho.Top;
+
+       MoverImagem.Top := ProgressBar.Top + ProgressBar.Height + 10;
+
+       LabelX.Top := MoverImagem.Top + MoverImagem.Height + 10;
+       EditX.Top := LabelX.Top - 8;
+       LabelY.Top := LabelX.Top;
+       EditY.Top := EditX.Top;
+
+       LabelR.Top := LabelX.Top + LabelX.Height + 10;
+       EditR.Top := LabelR.Top - 8;
+       LabelH.Top := LabelR.Top;
+       EditH.Top := EditR.Top;
+
+       LabelG.Top := LabelR.Top + LabelR.Height + 10;
+       EditG.Top := LabelG.Top - 8;
+       LabelS.Top := LabelG.Top;
+       EditS.Top := EditG.Top;
+
+       LabelB.Top := LabelG.Top + LabelG.Height + 10;
+       EditB.Top := LabelB.Top - 8;
+       LabelV.Top := LabelB.Top;
+       EditV.Top := EditB.Top;
+  end;
+
 end;
 
 procedure TForm1.MenuItemBinarizacaoClick(Sender: TObject);
@@ -249,6 +541,8 @@ begin
   verde := 0;
   azul := 0;
   cinza := 0;
+  s1 := '';
+  s2 := '';
 
   if InputQuery('Compressão S = c*r^(gama)', 'Valor de gama:', s1) then
     if InputQuery('Compressão S = c*r^(gama)', 'Valor de c:',  s2) then
@@ -815,6 +1109,74 @@ begin
      ProgressBar.Position := 0;
      Application.ProcessMessages;
 end;
+
+procedure ConverterRGBparaHSL(r, g, b: Integer; var h, s, l: Double);
+var
+  vermelhoTemp, verdeTemp, azulTemp: Double;
+  big, small, delta: Double;
+begin
+  vermelhoTemp := r / 255.0;
+  verdeTemp := g / 255.0;
+  azulTemp := b / 255.0;
+
+  big := Max(Max(vermelhoTemp, verdeTemp), azulTemp);
+  small := Min(Min(vermelhoTemp, verdeTemp), azulTemp);
+  delta := big - small;
+
+  l := (big + small) / 2.0;
+
+  if delta = 0 then
+    begin
+     s := 0;
+     h := 0;
+    end
+  else
+  begin
+      s := delta/(1-(Abs((2*l)-1)));
+
+      if big = vermelhoTemp then
+         h := (((verdeTemp - azulTemp)/delta) mod 6)
+      else if big = verdeTemp then
+           h := ((azulTemp - vermelhoTemp)/delta + 2)
+      else if big = azulTemp then
+          h := ((vermelhoTemp - verdeTemp)/delta + 4);
+  end;
+  h := Round(h * 60);
+  l := Round(l * 100);
+  s := Round(s * 100);
+end;
+
+procedure ConverterHSLparaRGB(h, s, l: Double; var r, g, b: Integer);
+var
+  c, x, m: Double;
+  vermelhoTemp, verdeTemp, azulTemp: Double;
+  setor: Integer;
+begin
+  h := h mod 360;
+  if (h < 0) then h := h + 360;
+  if (s > 1) then s := s / 100;
+  if (v > 1) then v := v / 100;
+
+  c := (1 - Abs(2 * l - 1)) * s;
+  x := c * (1 - Abs((h/60) mod 2 - 1));
+  m := l - (c / 2);
+
+  setor := Floor(h / 60);
+  case setor of
+       0: begin vermelhoTemp := c; verdeTemp := x; azulTemp := 0; end;
+       1: begin vermelhoTemp := x; verdeTemp := c; azulTemp := 0; end;
+       2: begin vermelhoTemp := 0; verdeTemp := c; azulTemp := x; end;
+       3: begin vermelhoTemp := 0; verdeTemp := x; azulTemp := c; end;
+       4: begin vermelhoTemp := x; verdeTemp := 0; azulTemp := c; end;
+       5: begin vermelhoTemp := c; verdeTemp := 0; azulTemp := x; end;
+   end;
+
+  r := Round((vermelhoTemp + m) * 255);
+  g := Round((verdeTemp + m) * 255);
+  b := Round((azulTemp + m) * 255);
+end;
+
+
 
 end.
 
