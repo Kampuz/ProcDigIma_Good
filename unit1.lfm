@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 1103
-  Height = 809
-  Top = 98
-  Width = 876
+  Left = 940
+  Height = 852
+  Top = 185
+  Width = 960
   Caption = 'Form1'
-  ClientHeight = 809
-  ClientWidth = 876
+  ClientHeight = 852
+  ClientWidth = 960
   DesignTimePPI = 120
   Menu = MainMenu
   LCLVersion = '3.8.0.0'
@@ -228,22 +228,6 @@ object Form1: TForm1
           Caption = '&Laplaciano'
           OnClick = MenuItemLaplacianoClick
         end
-        object MenuItemSobel: TMenuItem
-          Caption = '&Sobel'
-          OnClick = MenuItemSobelClick
-        end
-        object MenuItemMinimo: TMenuItem
-          Caption = 'Mínimo'
-          OnClick = MenuItemMinimoClick
-        end
-        object MenuItemMaximo: TMenuItem
-          Caption = 'Máximo'
-          OnClick = MenuItemMaximoClick
-        end
-        object MenuItemPontoMedio: TMenuItem
-          Caption = 'Ponto Médio'
-          OnClick = MenuItemPontoMedioClick
-        end
       end
       object MenuItemCanais: TMenuItem
         Caption = '&Cores'
@@ -259,26 +243,14 @@ object Form1: TForm1
           Caption = '&Restaurar'
           OnClick = MenuItemRestaurarClick
         end
-        object MenuItemPseudoCores: TMenuItem
-          Caption = '&Pseudo Cores'
-          OnClick = MenuItemPseudoCoresClick
-        end
       end
       object MenuItemConversores: TMenuItem
         Caption = 'Con&versor'
         OnClick = MenuItemConversoresClick
       end
-      object MenuItemRuidos: TMenuItem
-        Caption = '&Ruído Sal e Pimenta'
-        OnClick = MenuItemRuidosClick
-      end
       object MenuItemEqualizacao: TMenuItem
         Caption = '&Equalização'
         OnClick = MenuItemEqualizacaoClick
-      end
-      object MenuItemEqualizacaoL: TMenuItem
-        Caption = 'Equalização de L'
-        OnClick = MenuItemEqualizacaoLClick
       end
       object MenuItemBinarizacao: TMenuItem
         Caption = '&Binarização'
@@ -287,6 +259,55 @@ object Form1: TForm1
       object MenuItemCompressao: TMenuItem
         Caption = 'Com&pressão'
         OnClick = MenuItemCompressaoClick
+      end
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Segunda Entrega'
+      object MenuItemMaximo: TMenuItem
+        Caption = 'Filtro Máximo'
+        OnClick = MenuItemMaximoClick
+      end
+      object MenuItemMinimo: TMenuItem
+        Caption = 'Filtro Mínimo'
+        OnClick = MenuItemMinimoClick
+      end
+      object MenuItemSobel: TMenuItem
+        Caption = 'Filtro Sobel'
+        OnClick = MenuItemSobelClick
+      end
+      object MenuItemPontoMedio: TMenuItem
+        Caption = 'Filtro Ponto Medio'
+      end
+      object Separator2: TMenuItem
+        Caption = '-'
+      end
+      object MenuItemPseudoCores: TMenuItem
+        Caption = 'Adicionar Pseudo Cores'
+      end
+      object Separator3: TMenuItem
+        Caption = '-'
+      end
+      object MenuItemEqualizacaoL: TMenuItem
+        Caption = 'Equalizacao em L'
+        OnClick = MenuItemEqualizacaoLClick
+      end
+      object Separator4: TMenuItem
+        Caption = '-'
+      end
+      object MenuItemBinarizacaoOTSU: TMenuItem
+        Caption = 'Binarização OTSU'
+        OnClick = MenuItemBinarizacaoOTSUClick
+      end
+      object MenuItemLimiarizacaoOTSU: TMenuItem
+        Caption = 'Limiariziçao OTSU'
+        OnClick = MenuItemLimiarizacaoOTSUClick
+      end
+      object Separator5: TMenuItem
+        Caption = '-'
+      end
+      object MenuItemEsqueleto: TMenuItem
+        Caption = 'Esqueleto'
+        OnClick = MenuItemEsqueletoClick
       end
     end
   end
